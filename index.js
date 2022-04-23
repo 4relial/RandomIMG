@@ -24,9 +24,12 @@ async function zerochan(charname, length, response) {
       const num = Math.floor(Math.random() * 23) + 1;
       if (img[num]?.image) {
         const images = img[num].image;
-        response.json({
-          message: images,
-        });
+        got
+          .stream(images)
+          .on("response", (response) => {
+            response.headers["cache-control"] = "no-cache";
+          })
+          .pipe(response);
           console.log(images)
   }
 })
