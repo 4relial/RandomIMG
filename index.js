@@ -38,8 +38,7 @@ async function fetchImage(type, endpoint, response) {
 }
 
 async function zerochan(charname, length, res) {
-  try{
-zc.getSearch(charname, Math.floor(Math.random() * length) + 1).then(async (img) => {
+  zc.getSearch(charname, Math.floor(Math.random() * length) + 1).then(async (img) => {
       const num = Math.floor(Math.random() * 23) + 1;
       if (img[num]?.image) {
         const images = img[num].image;
@@ -51,15 +50,13 @@ zc.getSearch(charname, Math.floor(Math.random() * length) + 1).then(async (img) 
           if (!err && resp.statusCode === 200){
             res.set("Content-Type", "image/jpeg");
             res.send(resp.body);
+          } else {
+            zerochan('Genshin+Impact', 99, res);
           }
         });
           console.log(images)
   }
 })
-}catch (error) {
-    response.status(500).json({
-      message: error.message,
-    });
 }
 
 const PORT = process.env.PORT || 8080;
