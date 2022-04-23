@@ -1,7 +1,9 @@
 const express = require("express");
 const cors = require("cors");
+const request = require("request");
 const got = require("got");
 const zc = require('./api')
+const fs = require('fs')
 
 const ENDPOINTS = require("./lib/endpoints.js");
 
@@ -17,25 +19,42 @@ app.get("/", (req, res) => {
 });
 
 
+async function fetchImage(type, endpoint, response) {
+  try {
+    const { url } = await got(`${API_URL}/${type}/${endpoint}`).json();
 
-async function zerochan(charname, length, response) {
-  try{
+    got
+      .stream(url)
+      .on("response", (response) => {
+        response.headers["cache-control"] = "no-cache";
+      })
+      .pipe(response);
+      console.log(url)
+  } catch (error) {
+    response.status(500).json({
+      message: error.message,
+    });
+  }
+}
+
+async function zerochan(charname, length, res) {
   zc.getSearch(charname, Math.floor(Math.random() * length) + 1).then(async (img) => {
       const num = Math.floor(Math.random() * 23) + 1;
       if (img[num]?.image) {
         const images = img[num].image;
-        got
-          .stream(images)
-          .on("response", (response) => {
-            response.headers["cache-control"] = "no-cache";
-          })
-          .pipe(response);
+        request({
+          url: images,
+          encoding: null
+        }, 
+        (err, resp, buffer) => {
+          if (!err && resp.statusCode === 200){
+            res.set("Content-Type", "image/jpeg");
+            res.send(resp.body);
+          }
+        });
           console.log(images)
   }
 })
-  } catch {
-    zerochan('Genshin+Impact', 99, res);
-  }
 }
 
 const PORT = process.env.PORT || 8080;
