@@ -38,7 +38,8 @@ async function fetchImage(type, endpoint, response) {
 }
 
 async function zerochan(charname, length, res) {
-  zc.getSearch(charname, Math.floor(Math.random() * length) + 1).then(async (img) => {
+  try{
+zc.getSearch(charname, Math.floor(Math.random() * length) + 1).then(async (img) => {
       const num = Math.floor(Math.random() * 23) + 1;
       if (img[num]?.image) {
         const images = img[num].image;
@@ -55,6 +56,10 @@ async function zerochan(charname, length, res) {
           console.log(images)
   }
 })
+}catch (error) {
+    response.status(500).json({
+      message: error.message,
+    });
 }
 
 const PORT = process.env.PORT || 8080;
