@@ -19,19 +19,20 @@ app.get("/", (req, res) => {
 
 
 async function zerochan(charname, length, response) {
+  try{
   zc.getSearch(charname, Math.floor(Math.random() * length) + 1).then(async (img) => {
       const num = Math.floor(Math.random() * 23) + 1;
       if (img[num]?.image) {
         const images = img[num].image;
-        got
-          .stream(images)
-          .on("response", (response) => {
-            response.headers["cache-control"] = "no-cache";
-          })
-          .pipe(response);
+        response.json({
+          message: images,
+        });
           console.log(images)
   }
 })
+  } catch {
+    zerochan('Genshin+Impact', 99, res);
+  }
 }
 
 const PORT = process.env.PORT || 8080;
