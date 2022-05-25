@@ -35,7 +35,7 @@ megumi: {
 ```
 
 Live:  
-![](https://randomimg.4relial.repl.co/)
+![](https://randomimg.4relial.repl.co/megumi)
 
 ## How to get an image
 
