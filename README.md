@@ -1,54 +1,47 @@
-# Simple server for getting random images from [waifu.pics](https://waifu.pics/)
+# Random Image From Zerochan.Net
 
-![](https://waifu.now.sh/sfw/random)
+![](https://randomimg.4relial.repl.co)
 
-Simple API wrapped around @Waifu-pics in order to be able to get random anime images for my markdown profile
-
-- [Simple server for redirecting to the images on waifu.pics](#simple-server-for-redirecting-to-the-images-on-waifupics)
-  - [API](#api)
-  - [How to get an image](#how-to-get-an-image)
-  - [How to use an image in Markdown](#how-to-use-an-image-in-markdown)
+Simple API wrapped around zerochan in order to be able to get random anime images for my markdown profile
 
 ## API
 
-Here are different endpoints for API requests. Endpoints can be updated by the author, so, please, check [official docs](https://waifu.pics/docs).
+Here are different keyword for API requests. Endpoints can be updated by the author, so, please, check [ZEROCHAN](https://www.zerochan.net/).
 
 ```javascript
 {
-  sfw: [
-    "waifu",
-    "neko",
-    "shinobu",
-    "bully",
-    "cry",
-    "hug",
-    "kiss",
-    "lick",
-    "pat",
-    "smug",
-    "highfive",
-    "nom",
-    "bite",
-    "slap",
-    "wink",
-    "poke",
-    "dance",
-    "cringe",
-    "blush",
-    "random"
-  ],
-  nsfw: ["waifu", "neko", "trap", "blowjob","random"],
+keyword :  [
+  "genshin",
+  "honkai",
+  "megumi"
+]
+}
+```
+```javascript
+{
+genshin: {
+  key : "genshin+impact",
+  pg : 99
+},
+honkai: {
+  key : "houkai+3rd",
+  pg : 99
+},
+megumi: {
+  key : "katou+megumi",
+  pg : 15
+}
 }
 ```
 
 Live:  
-![](https://shot-my-url.herokuapp.com/?url=https://waifu.pics/api/endpoints)
+![](hhttps://randomimg.4relial.repl.co/)
 
 ## How to get an image
 
 | URL                                  | Request Type |
 | ------------------------------------ | ------------ |
-| `https://waifu.now.sh/type/endpoint` | **GET**      |
+| `https://randomimg.4relial.repl.co/keyword` | **GET**      |
 
 ![](https://waifu.now.sh/sfw/kiss)
 
@@ -57,5 +50,5 @@ Live:
 Just put the above url in typical Markdown syntax
 
 ```markdown
-![](https://waifu.now.sh/type/endpoint)
+![](https://randomimg.4relial.repl.co/keyword)
 ```

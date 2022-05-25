@@ -5,9 +5,8 @@ const got = require("got");
 const zc = require('./api')
 const fs = require('fs')
 
-const ENDPOINTS = require("./lib/endpoints.js");
-
-const API_URL = "https://api.waifu.pics";
+const keyword = require("./lib/endpoints.js").keyword
+const desc = require("./lib/endpoints.js").desc
 
 const app = express();
 
@@ -15,34 +14,36 @@ app.use(cors());
 app.use(express.json());
 
 app.get("/", (req, res) => {
-  zerochan('Genshin+Impact', 99, res);
+  endpoint =
+      keyword.keyword[Math.floor(Math.random() * keyword.keyword.length)];
+    zerochan(desc[endpoint].key, desc[endpoint].pg, res);
 });
 
 
-async function fetchImage(type, endpoint, response) {
-  try {
-    const { url } = await got(`${API_URL}/${type}/${endpoint}`).json();
-
-    got
-      .stream(url)
-      .on("response", (response) => {
-        response.headers["cache-control"] = "no-cache";
-      })
-      .pipe(response);
-      console.log(url)
-  } catch (error) {
-    response.status(500).json({
-      message: error.message,
+app.get("/:endpoint", async (req, res) => {
+  let endpoint = req.params.endpoint.toLocaleLowerCase();
+  res.set("Cache-Control", "no-cache");
+  if (keyword.keyword.includes(endpoint)) {
+    const anu = desc[endpoint].key
+    const length = desc[endpoint].pg
+    zerochan(anu, length, res);
+  } else if (endpoint === "random") {
+    endpoint =
+      keyword.keyword[Math.floor(Math.random() * keyword.keyword.length)];
+    zerochan(desc[endpoint].key, desc[endpoint].pg, res);
+  } else {
+    res.status(400).json({
+      message: "Bad endpoint",
     });
   }
-}
+})
 
 async function zerochan(charname, length, res) {
-  zc.getSearch(charname, Math.floor(Math.random() * length) + 1).then(async (img) => {
+  const img = await zc.getSearch(charname, Math.floor(Math.random() * length) + 1)
       const num = Math.floor(Math.random() * 23) + 1;
-      if (img[num]?.image) {
+      if (img[num] && img[num].image) {
         const images = img[num].image;
-        request({
+         request({
           url: images,
           encoding: null
         }, 
@@ -51,12 +52,12 @@ async function zerochan(charname, length, res) {
             res.set("Content-Type", "image/jpeg");
             res.send(resp.body);
           } else {
-            zerochan('Genshin+Impact', 99, res);
+            zerochan(charname,length, res);
           }
-        });
-          console.log(images)
-  }
-})
+        })
+        } else {
+        zerochan(charname,10, res);
+        }           
 }
 
 const PORT = process.env.PORT || 8080;
