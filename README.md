@@ -2,11 +2,11 @@
 
 ![](https://randomimg.4relial.repl.co)
 
-Simple API wrapped around zerochan in order to be able to get random anime images for my markdown profile
+Simple API wrapped around z in order to be able to get random anime images for my markdown profile
 
 ## API
 
-Here are different keyword for API requests. Endpoints can be updated by the author, so, please, check [ZEROCHAN](https://www.zerochan.net/).
+Here are different keyword for API requests. keyword can be updated by the author, so, please, check [ZEROCHAN](https://www.zerochan.net/).
 
 ```javascript
 {
@@ -35,7 +35,7 @@ megumi: {
 ```
 
 Live:  
-![](hhttps://randomimg.4relial.repl.co/)
+![](https://randomimg.4relial.repl.co/)
 
 ## How to get an image
 
@@ -43,7 +43,7 @@ Live:
 | ------------------------------------ | ------------ |
 | `https://randomimg.4relial.repl.co/keyword` | **GET**      |
 
-![](https://waifu.now.sh/sfw/kiss)
+![](hhttps://randomimg.4relial.repl.co/megumi)
 
 ## How to use an image in Markdown
 
